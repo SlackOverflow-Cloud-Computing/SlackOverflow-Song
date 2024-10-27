@@ -4,6 +4,11 @@ from framework.resources.base_resource import BaseResource
 
 from app.models.song import Song
 from app.services.service_factory import ServiceFactory
+import dotenv, os
+
+dotenv.load_dotenv()
+db = os.getenv('DB_NAME')
+collection = os.getenv('DB_COLLECTION')
 
 
 class SongResource(BaseResource):
@@ -12,8 +17,8 @@ class SongResource(BaseResource):
         super().__init__(config)
 
         self.data_service = ServiceFactory.get_service("SongResourceDataService")
-        self.database = "spotify_db"
-        self.collection = "spotify_songs"
+        self.database = db
+        self.collection = collection
         self.key_field= "track_id"
 
     def get_by_key(self, key: str) -> Song:

@@ -1,9 +1,15 @@
 from framework.services.service_factory import BaseServiceFactory
 import app.resources.song_resource as song_resource
 from framework.services.data_access.MySQLRDBDataService import MySQLRDBDataService
+import dotenv, os
+
+dotenv.load_dotenv()
+user = os.getenv('DB_USER')
+password = os.getenv('DB_PASS')
+host = os.getenv('DB_HOST')
+port = int(os.getenv('DB_PORT'))
 
 
-# TODO -- Implement this class
 class ServiceFactory(BaseServiceFactory):
 
     def __init__(self):
@@ -11,14 +17,12 @@ class ServiceFactory(BaseServiceFactory):
 
     @classmethod
     def get_service(cls, service_name):
-        #
-        # TODO -- The terrible, hardcoding and hacking continues.
-        #
         if service_name == 'SongResource':
             result = song_resource.SongResource(config=None)
         elif service_name == 'SongResourceDataService':
-            context = dict(user="admin", password="slackOverflowDB",
-                           host="database-1.ccjxezwbfect.us-east-1.rds.amazonaws.com", port=3306)
+            print("AAAAAAAAAAAAAA")
+            print(user, password, host, port)
+            context = dict(user=user, password=password, host=host, port=port)
             data_service = MySQLRDBDataService(context=context)
             result = data_service
         else:

@@ -1,3 +1,24 @@
-# W4153-P1-Application
+# SlackOverflow-Song
 
-Simple microservice application for the first project in W4153 -- Cloud Computing.
+## Description
+This is the application part of the song microservice.
+
+## Installation
+
+### Local Test
+1. **Clone the Repository:**
+   ```bash
+   git clone https://github.com/SlackOverflow-Cloud-Computing/SlackOverflow-Song
+   cd SlackOverflow-Song
+   
+2. **Install Dependencies:**
+   ```bash
+   python -m venv venv
+   source venv/bin/activate  # On Windows use `venv\Scripts\activate`
+   pip install -r requirements.txt
+
+3. **Run the Program:**
+   ```bash
+   python -m main.app
+
+### AWS Deployment
