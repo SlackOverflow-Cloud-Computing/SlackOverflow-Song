@@ -20,7 +20,6 @@ class ServiceFactory(BaseServiceFactory):
         if service_name == 'SongResource':
             result = song_resource.SongResource(config=None)
         elif service_name == 'SongResourceDataService':
-            print("AAAAAAAAAAAAAA")
             print(user, password, host, port)
             context = dict(user=user, password=password, host=host, port=port)
             data_service = MySQLRDBDataService(context=context)

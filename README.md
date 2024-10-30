@@ -19,6 +19,6 @@ This is the application part of the song microservice.
 
 3. **Run the Program:**
    ```bash
-   python -m main.app
+   uvicorn app.main:app --reload
 
 ### AWS Deployment

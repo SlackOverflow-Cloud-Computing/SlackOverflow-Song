@@ -50,8 +50,55 @@ class MySQLRDBDataService(DataDataService):
 
         return result
 
+    def get_all_data_objects(self, database_name: str, collection_name: str):
+        connection = None
+        result = None
 
+        try:
+            sql_statement = f"SELECT * FROM {database_name}.{collection_name}"
+            connection = self._get_connection()
+            cursor = connection.cursor()
+            cursor.execute(sql_statement)
+            result = cursor.fetchall()
+        except Exception as e:
+            print("error with db call")
+            print(e)
+            if connection:
+                connection.close()
 
+        return result
 
+    def get_count(self, database_name: str, collection_name: str) -> int:
+        """Get total count of records in the table"""
+        connection = None
+        try:
+            sql_statement = f"SELECT COUNT(*) as count FROM {database_name}.{collection_name}"
+            connection = self._get_connection()
+            cursor = connection.cursor()
+            cursor.execute(sql_statement)
+            result = cursor.fetchone()
+            return result['count']
+        except Exception as e:
+            print("Error getting count:", e)
+            return 0
+        finally:
+            if connection:
+                connection.close()
+
+    def get_paginated_data(self, database_name: str, collection_name: str, offset: int, limit: int):
+        """Get paginated data from the table"""
+        connection = None
+        try:
+            sql_statement = f"SELECT * FROM {database_name}.{collection_name} LIMIT %s OFFSET %s"
+            connection = self._get_connection()
+            cursor = connection.cursor()
+            cursor.execute(sql_statement, (limit, offset))
+            return cursor.fetchall()
+        except Exception as e:
+            print("Error with paginated db call:", e)
+            return []
+        finally:
+            if connection:
+                connection.close()
 
 
