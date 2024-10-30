@@ -19,6 +19,6 @@ This is the application part of the song microservice.
 
 3. **Run the Program:**
    ```bash
-   uvicorn app.main:app --reload
+   uvicorn app.main:app --reload --port 8081
 
 ### AWS Deployment
