@@ -15,12 +15,16 @@ app.add_middleware(
 
 app.include_router(song.router)
 
+logging.basicConfig(level=logging.INFO, format="\n%(asctime)s - %(message)s\n")
+
+
 @app.middleware("http")
 async def log_requests(request: Request, call_next):
     logging.info(f"Request: {request.method} {request.url}")
     response = await call_next(request)
     logging.info(f"Response: {request.method} {request.url}")
     return response
+
 
 @app.get("/")
 async def root():
