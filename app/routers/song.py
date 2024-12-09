@@ -1,4 +1,6 @@
 from fastapi import APIRouter, status, HTTPException
+from fastapi.middleware.cors import CORSMiddleware
+from fastapi import FastAPI
 
 from app.models.song import Song
 from app.resources.song_resource import SongResource # stops circular import issue
@@ -7,6 +9,7 @@ from fastapi import APIRouter, Query
 from typing import Optional
 
 router = APIRouter()
+
 
 
 @router.get("/songs/{song_id}", status_code=status.HTTP_200_OK)
