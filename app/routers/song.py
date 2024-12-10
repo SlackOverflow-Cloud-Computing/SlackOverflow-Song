@@ -10,7 +10,16 @@ from typing import Optional
 
 router = APIRouter()
 
+# Add CORS middleware to your FastAPI app
+app = FastAPI()
 
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["http://localhost:3000"],  # React app's URL
+    allow_credentials=True,
+    allow_methods=["*"],  # Allows all methods
+    allow_headers=["*"],  # Allows all headers
+)
 
 @router.get("/songs/{song_id}", status_code=status.HTTP_200_OK)
 async def get_songs(song_id: str) ->Song:
