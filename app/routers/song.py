@@ -7,6 +7,7 @@ from app.resources.song_resource import SongResource # stops circular import iss
 from app.services.service_factory import ServiceFactory
 from fastapi import APIRouter, Query
 from typing import Optional
+from typing import List
 
 router = APIRouter()
 
@@ -22,7 +23,7 @@ app.add_middleware(
 )
 
 @router.get("/songs/{song_id}", status_code=status.HTTP_200_OK)
-async def get_songs(song_id: str) ->Song:
+async def get_songs(song_id: str) -> Song:
     res = ServiceFactory.get_service("SongResource")
     result = res.get_by_key(song_id)
     if result is None:
@@ -49,3 +50,11 @@ async def get_songs(
     except Exception as e:
         print(f"Error getting songs: {e}")
         raise HTTPException(status_code=500, detail="Error getting song page")
+    
+@router.post("/songs", status_code=status.HTTP_201_CREATED)
+async def add_songs(songs: List[Song]):
+    res = ServiceFactory.get_service("SongResource")
+    try:
+        res.add(songs)
+    except Exception as e:
+        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=str(e))

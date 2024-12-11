@@ -101,4 +101,23 @@ class MySQLRDBDataService(DataDataService):
             if connection:
                 connection.close()
 
+    def add_data_object(self,
+                        database_name: str,
+                        collection_name: str,
+                        data: dict):
+        connection = None
+        success = False
 
+        try:
+            sql_statement = f"INSERT INTO {database_name}.{collection_name} " + \
+                f"({', '.join(data.keys())}) " + \
+                f"VALUES ({', '.join(['%s'] * len(data))})"
+            sql_statement = sql_statement.replace("key", "`key`")
+            connection = self._get_connection()
+            cursor = connection.cursor()
+            cursor.execute(sql_statement, list(data.values()))
+            success = True
+        except Exception as e:
+            if connection:
+                connection.close()
+        return success

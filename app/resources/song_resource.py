@@ -64,3 +64,9 @@ class SongResource(BaseResource):
         d_service = self.data_service
         result = d_service.get_all_data_objects(self.database, self.collection)
         return result
+    
+    def add(self, data: List[Song]) -> bool:
+        d_service = self.data_service
+        for d in data:
+            result = d_service.add_data_object(self.database, self.collection, d.model_dump())
+        return result
